@@ -106,7 +106,7 @@ def forecast_and_union():
 with DAG(
     dag_id="sf_ml_forcast_dag",
     start_date=datetime(2025, 10, 1),
-    schedule="45 3 * * *",  # after ETL
+    schedule=None #No schedule since this dag get's triggered after yf_stock_price_etl completes
     catchup=False,
     tags=["ELT", "forecast", "snowflake"],
 ) as dag:
