@@ -125,7 +125,7 @@ def load_raw(records):
         cur.close(); conn.close()
 
 with DAG(
-    dag_id="yf_stock_price_etl_backup",
+    dag_id="yf_stock_price_etl",
     start_date=datetime(2025, 10, 1),
     schedule="15 3 * * *",
     catchup=False,
