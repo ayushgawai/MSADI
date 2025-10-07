@@ -3,7 +3,7 @@
 
 This project demonstrates an end-to-end ELT + ML pipeline using **Apache Airflow**, **Snowflake**, and **yFinance** data. It is composed of two Airflow DAGs:
 
-- [`yf_stock_price_etl_backup`](dags/yf_stock_price_etl_backup.py) — Extracts stock OHLCV data from Yahoo Finance and loads it into Snowflake.
+- [`yf_stock_price_etl`](dags/yf_stock_price_etl.py) — Extracts stock OHLCV data from Yahoo Finance and loads it into Snowflake.
 - [`sf_ml_forcast_dag`](dags/sf_ml_forcast_dag.py) — Trains a time series forecasting model using Snowflake ML and stores actual + forecasted values.
 
 ---
@@ -20,7 +20,7 @@ Trigger ML DAG → Snowflake ML Forecast
 
 ---
 
-## 1️⃣ DAG: `yf_stock_price_etl_backup`
+## 1️⃣ DAG: `yf_stock_price_etl`
 
 ### Description
 
@@ -104,7 +104,7 @@ Ensure the following Airflow Variables are set:
 
 ## 🗓️ Scheduling
 
-- `yf_stock_price_etl_backup` runs daily at **03:15 UTC**
+- `yf_stock_price_etl` runs daily at **03:15 UTC**
 - `sf_ml_forcast_dag` runs daily at **03:45 UTC** (after ETL)
 
 ---
@@ -141,7 +141,7 @@ Use this project to:
 ````
 
 dags/
-├── yf_stock_price_etl_backup.py       # ETL DAG
+├── yf_stock_price_etl.py       # ETL DAG
 └── sf_ml_forcast_dag.py               # ML Forecast DAG
 README.md                              # Project documentation
 
