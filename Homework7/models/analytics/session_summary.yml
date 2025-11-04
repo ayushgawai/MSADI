@@ -1,0 +1,13 @@
+version: 2
+models:
+  - name: session_summary
+    description: "Joined, de-duplicated session data"
+    columns:
+      - name: SESSIONID
+        description: "Primary business key"
+        tests:
+          - not_null
+          - unique
+      - name: USERID
+      - name: CHANNEL
+      - name: TS

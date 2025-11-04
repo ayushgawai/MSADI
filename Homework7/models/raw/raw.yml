@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw
+    database: USER_DB_HORNET
+    schema: RAW
+    tables:
+      - name: market_data
+      - name: user_session_channel
+      - name: session_timestamp

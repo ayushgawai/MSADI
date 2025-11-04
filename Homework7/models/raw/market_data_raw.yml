@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: market_data_raw
+    description: "Incremental upsert of daily OHLCV market data."
+    columns:
+      - name: DATE
+        description: "Trading date (YYYY-MM-DD). Type: DATE."
+        tests:
+          - not_null
+      - name: SYMBOL
+        description: "Ticker symbol. Type: TEXT."
+        tests:
+          - not_null
+      - name: OPEN
+        description: "Opening price. Type: NUMBER."
+      - name: HIGH
+        description: "High price of the day. Type: NUMBER."
+      - name: LOW
+        description: "Low price of the day. Type: NUMBER."
+      - name: CLOSE
+        description: "Closing price. Type: NUMBER."
+      - name: VOLUME
+        description: "Daily traded volume. Type: NUMBER/INTEGER."
+      - name: CREATED_AT
+        description: "Ingestion timestamp. Type: TIMESTAMP."
+
+    tests:
+      - unique:
+          column_name: "concat(SYMBOL, '|', to_varchar(DATE))"

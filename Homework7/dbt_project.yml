@@ -1,0 +1,32 @@
+name: 'DATA_226_DBT'
+version: '1.0.0'
+profile: 'DATA_226_DBT'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Database & schema routing for folders
+models:
+  DATA_226_DBT:
+    # Everything in RAW folder goes to RAW schema
+    raw:
+      +database: USER_DB_HORNET
+      +schema: RAW
+
+    # Everything in TRANSFORM folder goes to TRANSFORM schema
+    transform:
+      +database: USER_DB_HORNET
+      +schema: TRANSFORM
+
+    # Everything in ANALYTICS folder goes to ANALYTICS schema
+    analytics:
+      +database: USER_DB_HORNET
+      +schema: ANALYTICS
