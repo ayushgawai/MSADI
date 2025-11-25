@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: agg_stock_summary
+    description: "Aggregated summary statistics per stock symbol including price stats, volume metrics, and performance indicators"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+        data_tests:
+          - unique
+          - not_null
+      - name: first_date
+        description: "First trading date in the dataset"
+        data_tests:
+          - not_null
+      - name: last_date
+        description: "Most recent trading date"
+        data_tests:
+          - not_null
+      - name: trading_days
+        description: "Total number of trading days"
+        data_tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+      - name: latest_close
+        description: "Most recent closing price"
+      - name: latest_rsi
+        description: "Most recent RSI value"
+      - name: latest_rsi_signal
+        description: "Current RSI signal (OVERBOUGHT/OVERSOLD/NEUTRAL)"
+      - name: period_low
+        description: "Lowest price in the period"
+      - name: period_high
+        description: "Highest price in the period"
+      - name: avg_close
+        description: "Average closing price"
+      - name: avg_volume
+        description: "Average daily trading volume"
+      - name: avg_daily_return
+        description: "Average daily percentage return"
+      - name: up_day_pct
+        description: "Percentage of days with positive price movement"
+      - name: avg_rsi
+        description: "Average RSI over the period"
+      - name: avg_volatility
+        description: "Average 14-day volatility"
+      - name: refreshed_at
+        description: "Timestamp when data was refreshed"
+        data_tests:
+          - not_null
+
+  - name: agg_daily_market
+    description: "Daily market-wide aggregation showing overall market trends and sentiment"
+    columns:
+      - name: date
+        description: "Trading date"
+        data_tests:
+          - unique
+          - not_null
+      - name: symbol_count
+        description: "Number of symbols traded on this date"
+        data_tests:
+          - not_null
+      - name: avg_close
+        description: "Average closing price across all symbols"
+      - name: avg_pct_change
+        description: "Average percentage change across all symbols"
+      - name: total_volume
+        description: "Total trading volume across all symbols"
+      - name: stocks_up
+        description: "Count of stocks with positive price change"
+      - name: stocks_down
+        description: "Count of stocks with negative price change"
+      - name: avg_rsi
+        description: "Average RSI across all symbols"
+      - name: market_breadth
+        description: "Market breadth indicator: (up - down) / total * 100"
+      - name: loaded_at
+        description: "Timestamp when record was loaded"
+        data_tests:
+          - not_null
+

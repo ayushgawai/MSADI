@@ -1,0 +1,36 @@
+name: 'stock_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'stock_analytics'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  database: "USER_DB_HORNET"
+
+models:
+  stock_analytics:
+    staging:
+      +schema: STAGE
+      +materialized: view
+    transform:
+      +schema: TRANSFORM
+      +materialized: table
+    analytics:
+      +schema: ANALYTICS
+      +materialized: table
+
+snapshots:
+  stock_analytics:
+    +schema: SNAPSHOT
+

@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: int_stock_indicators
+    description: "Intermediate model with calculated technical indicators including SMAs, RSI, and volatility metrics"
+    columns:
+      - name: symbol
+        description: "Stock ticker symbol"
+        data_tests:
+          - not_null
+      - name: date
+        description: "Trading date"
+        data_tests:
+          - not_null
+      - name: close
+        description: "Closing price"
+        data_tests:
+          - not_null
+      - name: rsi_14
+        description: "14-day Relative Strength Index (0-100)"
+      - name: sma_7
+        description: "7-day Simple Moving Average of close price"
+      - name: sma_14
+        description: "14-day Simple Moving Average of close price"
+      - name: sma_30
+        description: "30-day Simple Moving Average of close price"
+      - name: volatility_14
+        description: "14-day price volatility (standard deviation)"
+      - name: indicators_valid
+        description: "Flag indicating if enough data exists for valid indicator calculation"
+
+  - name: fct_stock_price
+    description: "Fact table containing daily stock prices with all technical indicators and trading signals"
+    columns:
+      - name: stock_price_key
+        description: "Surrogate key for the stock price record"
+        data_tests:
+          - unique
+          - not_null
+      - name: symbol
+        description: "Stock ticker symbol"
+        data_tests:
+          - not_null
+      - name: date
+        description: "Trading date"
+        data_tests:
+          - not_null
+      - name: open
+        description: "Opening price"
+        data_tests:
+          - not_null
+      - name: high
+        description: "Daily high price"
+        data_tests:
+          - not_null
+      - name: low
+        description: "Daily low price"
+        data_tests:
+          - not_null
+      - name: close
+        description: "Closing price"
+        data_tests:
+          - not_null
+      - name: volume
+        description: "Trading volume"
+        data_tests:
+          - not_null
+      - name: rsi_14
+        description: "14-day Relative Strength Index"
+      - name: rsi_signal
+        description: "RSI-based trading signal"
+        data_tests:
+          - accepted_values:
+              values: ['OVERBOUGHT', 'OVERSOLD', 'NEUTRAL']
+      - name: price_vs_sma_14
+        description: "Price position relative to 14-day SMA"
+        data_tests:
+          - accepted_values:
+              values: ['ABOVE_SMA', 'BELOW_SMA', 'AT_SMA']
+      - name: volume_signal
+        description: "Volume signal based on 14-day average"
+        data_tests:
+          - accepted_values:
+              values: ['HIGH_VOLUME', 'LOW_VOLUME', 'NORMAL_VOLUME']
+      - name: price_direction
+        description: "Daily price movement direction"
+        data_tests:
+          - accepted_values:
+              values: ['UP', 'DOWN', 'FLAT']
+      - name: loaded_at
+        description: "Timestamp when record was loaded"
+        data_tests:
+          - not_null
+

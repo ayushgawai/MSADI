@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: raw
+    database: "{{ var('database') }}"
+    schema: RAW
+    description: "Raw data layer containing source data from yfinance ETL pipeline"
+    tables:
+      - name: stock_price
+        description: "Daily OHLCV stock price data extracted from Yahoo Finance API"
+        columns:
+          - name: symbol
+            description: "Stock ticker symbol (e.g., AAPL, MSFT, GOOGL)"
+            data_tests:
+              - not_null
+          - name: date
+            description: "Trading date"
+            data_tests:
+              - not_null
+          - name: open
+            description: "Opening price for the trading day"
+            data_tests:
+              - not_null
+          - name: high
+            description: "Highest price during the trading day"
+            data_tests:
+              - not_null
+          - name: low
+            description: "Lowest price during the trading day"
+            data_tests:
+              - not_null
+          - name: close
+            description: "Closing price for the trading day"
+            data_tests:
+              - not_null
+          - name: volume
+            description: "Number of shares traded during the day"
+            data_tests:
+              - not_null
+
